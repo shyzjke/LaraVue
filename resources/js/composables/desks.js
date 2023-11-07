@@ -14,8 +14,8 @@ export default function useDesks() {
         desks.value = response.data.data
     }
 
-    const showDesk = async (id) => {
-        let response = await axios.get(`/V1/desks/${id}`)
+    const DeskShow = async (id) => {
+        let response = await axios.get('/desks/' + id)
         desk.value = response.data.data
     }
  
@@ -24,6 +24,6 @@ export default function useDesks() {
         desk,
         desks,
         getDesks,
-        showDesk
+        DeskShow
     }
 }
