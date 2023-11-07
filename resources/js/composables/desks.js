@@ -18,12 +18,27 @@ export default function useDesks() {
         let response = await axios.get('/desks/' + id)
         desk.value = response.data.data
     }
+
+    const updateDesk = async (id) => {
+        errors.value = ''
+        try {
+            await axios.patch(`/desks/${id}`, desk.value)
+            await router.push('/desks')
+        } catch (e) {
+            if (e.response.status === 422) {
+                for (const key in e.response.data.errors) {
+                    errors.value += e.response.data.errors[key][0] + ' ';
+                }
+            }
+        }
+    }
  
     return {
         errors,
         desk,
         desks,
         getDesks,
-        DeskShow
+        DeskShow,
+        updateDesk
     }
 }
