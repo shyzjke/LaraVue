@@ -2,10 +2,10 @@
     <div class="background">
         <div class="overflow-hidden overflow-x-auto min-w-full align-middle sm:rounded-md container">
 
-        <div class="alert text-light bg-danger opacity-25 w-75 mt-3" role="alert" v-if="errors">
-            Data loading error!
+        <div class="alert alert-danger opacity-75 w-75 mt-3" role="alert" v-if="errors !== ''">
+            <p class="m-0">JSON data loading error!</p>
+            <p class="m-0">{{ errors }}</p>
         </div>
-
             <form @submit.prevent="saveDesk" class=" my-3">
                 <div class="form-group">
                     <input class="form-control w-75" placeholder="Enter desk name" v-model.trim="v$.name.$model" :class="{'is-invalid': v$.name.$error}">
@@ -19,7 +19,7 @@
                 </button>
             </form>
 
-            <div class="row justify-content-start ms-1">
+            <div class="row justify-content-start ms-0">
                 <div v-for="desk in desks" :key="desk.id" class="card bg-light mb-4 me-4" style="width: 18rem;">
                     <router-link class="text-decoration-none" :to="{name: 'desk.show', params: {deskId: desk.id}}" >
                         <h5 class="card-header text-dark">{{desk.name}}</h5>
@@ -30,7 +30,7 @@
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                     </div>
                     
-                    <button type="button" class="btn btn-danger mb-3" @click="deleteDesk(desk.id)">
+                    <button type="button" class="btn btn-sm btn-danger mb-3" @click="deleteDesk(desk.id)">
                         DELETE
                     </button>
 
@@ -51,7 +51,7 @@ import { maxLength, minLength, required } from '@vuelidate/validators'
 export default {
 
     setup() {
-        const { errors, desks, getDesks, destroyDesk, storeDesk } = useDesks()
+        const { errors, desks, getDesks, destroyDesk, storeDesk, errored } = useDesks()
  
         onMounted(getDesks)
 
@@ -92,7 +92,8 @@ export default {
             v$,
             state,
             saveDesk,
-            errors
+            errors,
+            errored
         }
     }
 

@@ -22,7 +22,7 @@ export default function useClients() {
     const storeClient = async (data) => {
         errors.value = ''
         try {
-            await axios.post('/clients', data)
+            await axios.post('jj/clients', data)
             await router.push('/clients')
         } catch (e) {
             if (e.response.status === 422) {

@@ -1,17 +1,11 @@
 <template>
   <div class="container">
-    <div v-if="errors" class="mt-4">
-        <div v-for="(v, k) in errors" :key="k" class="alert text-light bg-danger opacity-75" role="alert">
-            <p v-for="error in v" :key="error" class="text-sm justify-content-center align-items-center m-0">
-                {{ error }}
-            </p>
-        </div>
+    <div class="alert alert-danger bg-opacity-75 w-75 mt-3" role="alert" v-if="errors !== ''">
+            <p class="m-0">JSON data loading error!</p>
+            <p class="m-0">{{ errors }}</p>
     </div>
 
-    <div class="alert alert-danger" role="alert" v-if="errors">
-        Ошибка загрузки данных!
-    </div>
-
+    <h4 class="mt-3"> {{ desk.name }}</h4>
     <div class="form-group mt-2">
         <input type="text" v-model.trim="v$.name.$model" v-model="desk.name" @blur="saveName" v-on:keyup.enter="saveName" class="form-control" :class="{'is-invalid': v$.name.$error}">
         <div class="input-errors" v-for="error of v$.name.$errors" :key="error.$uid">

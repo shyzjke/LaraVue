@@ -15,7 +15,7 @@ class DeskController extends Controller
      */
     public function index()
     {
-        return DeskResource::collection(Desk::all());
+        return DeskResource::collection(Desk::orderBy('created_at', 'desc')->get());
     }
 
     /**

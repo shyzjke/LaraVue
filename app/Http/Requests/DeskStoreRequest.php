@@ -22,7 +22,14 @@ class DeskStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required'
+            'name' => 'required|unique:desks,name,'.$this->desk->id
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.unique' => 'Desk name must be unique'
         ];
     }
 }
