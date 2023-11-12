@@ -7,6 +7,7 @@ import ClientEdit from '../components/clients/ClientEdit.vue'
 import UserIndex from '../components/home/UserIndex.vue'
 import DeskIndex from '../components/desks/DeskIndex.vue'
 import DeskShow from '../components/desks/DeskShow.vue'
+import DeskCreate from '../components/desks/DeskCreate.vue'
 
 
  
@@ -37,6 +38,11 @@ const routes = [
         path: '/desks',
         name: 'desk.index',
         component: DeskIndex
+    },
+    {
+        path: '/desks/create',
+        name: 'desk.create',
+        component: DeskCreate
     },
     {
         path: '/desks/:deskId',

@@ -19,6 +19,24 @@ export default function useDesks() {
         desk.value = response.data.data
     }
 
+
+    const storeDesk = async (data) => {
+        errors.value = ''
+        try {
+            await axios.post('/desks', data)
+            await router.push('/desks')
+          
+        } catch (e) {
+            errors.value = true
+            if (e.response.status === 422) {
+                for (const key in e.response.data.errors) {
+                    errors.value += e.response.data.errors[key][0] + ' ';
+                }
+            }
+        }
+ 
+    }
+
     const updateDesk = async (id) => {
         
         try {
@@ -31,13 +49,19 @@ export default function useDesks() {
             }
         }
     }
- 
+    
+    const destroyDesk = async (id) => {
+        await axios.delete(`/desks/${id}`)
+    }
+
     return {
         errors,
         desk,
         desks,
         getDesks,
         DeskShow,
-        updateDesk
+        updateDesk,
+        destroyDesk,
+        storeDesk
     }
 }
