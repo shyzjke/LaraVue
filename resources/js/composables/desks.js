@@ -20,15 +20,14 @@ export default function useDesks() {
     }
 
     const updateDesk = async (id) => {
-        errors.value = ''
+        
         try {
             await axios.patch(`/desks/${id}`, desk.value)
             await router.push('/desks')
         } catch (e) {
+            errors.value = true
             if (e.response.status === 422) {
-                for (const key in e.response.data.errors) {
-                    errors.value += e.response.data.errors[key][0] + ' ';
-                }
+                errors.value = e.response.data.errors
             }
         }
     }
