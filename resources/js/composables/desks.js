@@ -21,20 +21,26 @@ export default function useDesks() {
     }
 
 
-    const storeDesk = async (data) => {
-      
+    const storeDesk = async (data) => { 
         try {
             await axios.post('/desks', data)
             await router.push('/desks')
    
             errors.value = ''
         } catch (e) {
-            errors.value = ''
-            if (e.response.status === 422) {
-                for (const key in e.response.data.errors) {
-                    errors.value = e.response.data.errors[key][0] + ' ';
+            if (e.response.status === 405) {
+                errors.value = undefined
+            } else {
+                if (e.response.status === 422) {
+                    
+                    errors.value = ''
+                    for (const key in e.response.data.errors) {
+                        errors.value = e.response.data.errors[key][0] + ' ';
+                    }
                 }
             }
+
+
         }
  
     }
