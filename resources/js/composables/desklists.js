@@ -2,46 +2,33 @@ import { ref } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
  
-export default function useDesks() {
+export default function useDesklists() {
     const desk = ref([])
     const desks = ref([])
+    const desklist = ref([])
+    const desklists = ref([])
  
     const errors = ref('')
     const router = useRouter()
 
- 
     const getDesks = async () => {
         let response = await axios.get('/desks')
         desks.value = response.data.data
     }
 
-    const DeskShow = async (id) => {
+    const getDesk = async (id) => {
         let response = await axios.get('/desks/' + id)
         desk.value = response.data.data
     }
 
-    const storeDesk = async (data) => { 
-        try {
-            await axios.post('/desks', data)
-            await router.push('/desks')
-   
-            errors.value = ''
-        } catch (e) {
-            if (e.response.status === 405) {
-                errors.value = undefined
-            } else {
-                if (e.response.status === 422) {
-                    
-                    errors.value = ''
-                    for (const key in e.response.data.errors) {
-                        errors.value = e.response.data.errors[key][0] + ' ';
-                    }
-                }
-            }
-
-
-        }
  
+    const getDesklists = async (deskId) => {
+        let response = await axios.get('/desklists/', {
+            params: {
+              desk_id: deskId,
+            }
+          })
+        desklists.value = response.data.data
     }
 
     const updateDesk = async (id) => {
@@ -58,20 +45,16 @@ export default function useDesks() {
             }
         }
     }
-    
-    const destroyDesk = async (id) => {
-        await axios.delete(`/desks/${id}`)
-    }
 
     return {
-        errors,
         desk,
         desks,
+        errors,
+        desklist,
+        desklists,
+        getDesk,
         getDesks,
-        DeskShow,
-        updateDesk,
-        destroyDesk,
-        storeDesk,
-
+        getDesklists,
+        updateDesk
     }
 }

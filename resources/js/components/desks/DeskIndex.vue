@@ -21,7 +21,7 @@
 
             <div class="row justify-content-start ms-0">
                 <div v-for="desk in desks" :key="desk.id" class="card bg-light mb-4 me-4" style="width: 18rem;">
-                    <router-link class="text-decoration-none" :to="{name: 'desk.show', params: {deskId: desk.id}}" >
+                    <router-link class="text-decoration-none" :to="{name: 'desklist.index', params: {deskId: desk.id}}" >
                         <h5 class="card-header text-dark">{{desk.name}}</h5>
                     </router-link>
                     

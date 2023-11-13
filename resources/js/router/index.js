@@ -6,8 +6,9 @@ import ClientCreate from '../components/clients/ClientCreate.vue'
 import ClientEdit from '../components/clients/ClientEdit.vue'
 import UserIndex from '../components/home/UserIndex.vue'
 import DeskIndex from '../components/desks/DeskIndex.vue'
-import DeskShow from '../components/desks/DeskShow.vue'
+import DesklistIndex from '../components/desks/DesklistIndex.vue'
 import DeskCreate from '../components/desks/DeskCreate.vue'
+
 
 
  
@@ -46,8 +47,8 @@ const routes = [
     },
     {
         path: '/desks/:deskId',
-        name: 'desk.show',
-        component: DeskShow,
+        name: 'desklist.index',
+        component: DesklistIndex,
         props: true
     },
 ];

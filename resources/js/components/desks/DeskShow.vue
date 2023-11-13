@@ -12,6 +12,7 @@
               <div class="error-msg text-danger">{{ error.$message }}</div>
         </div>
     </div>
+
   </div>
 </template>
 
@@ -37,13 +38,9 @@ export default {
 
         onMounted(() => DeskShow(props.deskId))
 
-
-
         const state = reactive({
           name: '',
         })
-
-
 
         const rules = {
           name: {  required, minLength: minLength(4), maxLength: maxLength(8)  }, // Matches state.firstName
@@ -52,11 +49,9 @@ export default {
         const v$ = useVuelidate(rules, state)
 
         const saveName = async () => {
-
-        if (!v$.value.$error) {
-          await updateDesk(props.deskId)
-        }
-        
+          if (!v$.value.$error) {
+            await updateDesk(props.deskId)
+          }
         }
 
         return {
