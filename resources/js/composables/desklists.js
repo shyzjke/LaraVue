@@ -31,19 +31,48 @@ export default function useDesklists() {
         desklists.value = response.data.data
     }
 
-    const updateDesk = async (id) => {
-        
+
+    const storeDesklist = async (data) => {
+        errors.value = ''
         try {
-            await axios.patch(`/desks/${id}`, desk.value)
-            await router.push('/desks')
+            await axios.post('/desklists', data )
+            await router.push({name: 'desklist.index'})
+
+         
         } catch (e) {
-        
-            if (e.response.status === 422) {
-                for (const key in e.response.data.errors) {
-                    errors.value = e.response.data.errors[key][0] + ' ';
+            if (e.response.status === 405) {
+                errors.value = undefined
+            } else {
+                if (e.response.status === 422) {
+                    
+                    errors.value = ''
+                    for (const key in e.response.data.errors) {
+                        errors.value = e.response.data.errors[key][0] + ' ';
+                    }
                 }
             }
+
+
         }
+    }
+    const updateDesklist = async (desklist) => {
+        errors.value = ''
+        try {
+            await axios.put('/desklists/' + desklist.id, desklist, {
+                params: {
+
+                },
+            })
+            await router.push({name: 'desklist.index'})
+        } catch (e) {
+            if (e.response.status === 422) {
+               errors.value = e.response.data.errors
+            }
+        }
+    }
+
+    const destroyDesklist = async (id) => {
+        await axios.delete(`/desklists/${id}`);
     }
 
     return {
@@ -55,6 +84,8 @@ export default function useDesklists() {
         getDesk,
         getDesks,
         getDesklists,
-        updateDesk
+        storeDesklist,
+        updateDesklist,
+        destroyDesklist
     }
 }
